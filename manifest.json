@@ -10,7 +10,7 @@
 	},
 	"content_scripts": [
 		{
-			"matches": [ "https://gitee.com/*/issues/new/*" ],
+			"matches": [ "https://gitee.com/LongbowEnterprise/BootstrapBlazor/issues/new?*" ],
 			"js": [ "content-script.js" ]
 		}
 	]
