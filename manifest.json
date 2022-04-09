@@ -1,5 +1,5 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "码云平台 Issue 自动填充默认值扩展插件",
     "version": "1.0.0",
     "description": "码云平台 Issue 自动填充默认值扩展插件",
@@ -11,7 +11,9 @@
     "content_scripts": [{
         "matches": [
             "https://gitee.com/LongbowEnterprise/BootstrapBlazor/issues/new?*",
-            "https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues/new?*"
+            "https://gitee.com/LongbowEnterprise/BootstrapBlazor/pulls/*",
+            "https://gitee.com/LongbowEnterprise/BootstrapAdmin/issues/new?*",
+            "https://gitee.com/LongbowEnterprise/BootstrapAdmin/pulls/*"
         ],
         "js": ["content-script.js"]
     }]
