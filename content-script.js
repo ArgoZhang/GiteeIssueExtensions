@@ -28,7 +28,7 @@
         var handler = window.setInterval(function() {
             var label = fields.querySelector('[data-value="35630651"]');
             if (label) {
-                window.clearTimeout(handler);
+                window.clearInterval(handler);
                 label.click();
 
                 pullMilestone();
