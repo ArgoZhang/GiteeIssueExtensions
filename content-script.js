@@ -56,55 +56,45 @@
     var assigneesWork = function(index) {
         dowork(index, function() {
             var assignee = document.getElementById('issue-user-554725').querySelector('.btn-set-assignee');
-            assignee.click();
-
-            labelsWork(++index);
+            return { item: assignee, invoke: labelsWork };
         });
     };
 
-    var labelsWork = function(index) {
-        dowork(index, function() {
-            var label = document.querySelector('.issue-field-list .issue-field div[title="feature"]');
-            label.click();
-
-            projectsWork(++index);
+    var labelsWork = function() {
+        dowork(1, function() {
+            var assignee = document.querySelector('.issue-field-list .issue-field div[title="feature"]');
+            return { item: assignee, invoke: projectsWork };
         });
     };
 
-    var projectsWork = function(index) {
-        dowork(index, function() {
-            var label = document.querySelector('.issue-field-list .issue-field div[data-value="70539"]');
-            label.click();
-
-            milestonesWork(++index);
+    var projectsWork = function() {
+        dowork(2, function() {
+            var assignee = document.querySelector('.issue-field-list .issue-field div[data-value="70539"]');
+            return { item: assignee, invoke: milestonesWork };
         });
     };
 
-    var milestonesWork = function(index) {
-        dowork(index, function() {
-            var label = document.querySelector('.issue-field-list .milestone [data-program]');
-            label.click();
-
-            branchesWork(++index);
+    var milestonesWork = function() {
+        dowork(3, function() {
+            var assignee = document.querySelector('.issue-field-list .milestone [data-program]');
+            return { item: assignee, invoke: branchesWork };
         });
     };
 
-    var branchesWork = function(index) {
-        dowork(index, function() {
-            var label = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/main"]');
-            if (label === null) {
-                label = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/master"]');
+    var branchesWork = function() {
+        dowork(4, function() {
+            var assignee = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/main"]');
+            if (assignee === null) {
+                assignee = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/master"]');
             }
-            label.click();
-
-            planedWork(index + 4);
+            return { item: assignee, invoke: planedWork };
         });
     };
 
-    var planedWork = function(index) {
-        dowork(index, function() {
-            var label = document.querySelector('.datetimepicker-days .today');
-            label.click();
+    var planedWork = function() {
+        dowork(8, function() {
+            var assignee = document.querySelector('.datetimepicker-days .today');
+            return { item: assignee, invoke: null };
         });
     }
 
@@ -113,9 +103,15 @@
         var right = fields[index].querySelector('.issue-field-action');
         right.click();
 
-        var handler = window.setTimeout(function() {
-            window.clearTimeout(handler);
-            callback();
+        var handler = window.setInterval(function() {
+            var data = callback();
+            if (data.item) {
+                window.clearInterval(handler);
+                data.item.click();
+                if (data.invoke != null) {
+                    data.invoke();
+                }
+            }
         }, 300);
     }
 })();
