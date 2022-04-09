@@ -6,7 +6,7 @@
         var isPR = window.location.href.indexOf('/pulls/');
 
         // dowork
-        if (isPR) {
+        if (isPR > 0) {
             var field = document.querySelector('.pull-request__sidebar .auto-processing > :not(.checked) > label[for="pull_request_prune_branch"]');
             if (field) {
                 field.click();
