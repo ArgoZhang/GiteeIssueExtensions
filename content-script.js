@@ -13,7 +13,7 @@
             }
             pullRequestLabel();
         } else {
-            assigneesWork(0);
+            assigneesWork();
         }
     };
 
@@ -53,8 +53,8 @@
         }, 300);
     };
 
-    var assigneesWork = function(index) {
-        dowork(index, function() {
+    var assigneesWork = function() {
+        dowork(0, function() {
             var assignee = document.getElementById('issue-user-554725').querySelector('.btn-set-assignee');
             return { item: assignee, invoke: labelsWork };
         });
