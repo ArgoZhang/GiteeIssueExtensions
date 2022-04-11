@@ -3,10 +3,10 @@
         console.log('Gitee Issue auto fill has been registered');
 
         // 判断是 PR 还是 Issue
-        var isPR = window.location.href.indexOf('/pulls/');
+        var isPR = window.location.href.indexOf('/pulls/') > 0 || window.location.href.indexOf('/pull/') > 0;
 
         // dowork
-        if (isPR > 0) {
+        if (isPR) {
             var field = document.querySelector('.pull-request__sidebar .auto-processing > :not(.checked) > label[for="pull_request_prune_branch"]');
             if (field) {
                 field.click();
