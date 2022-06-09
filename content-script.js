@@ -26,7 +26,7 @@
             pullMilestone();
         }
         var handler = window.setInterval(function() {
-            var label = fields.querySelector('[data-value="35630651"]');
+            var label = fields.querySelector('[data-value="56189147"]');
             if (label) {
                 window.clearInterval(handler);
                 label.click();
@@ -39,7 +39,7 @@
     var pullMilestone = function() {
         var fields = document.querySelector('.pull-request__sidebar .milestone-field');
         var field = fields.children[1];
-        if (field.children[0].getAttribute('data-value') === "0") {
+        if (field.children.length == 0) {
             fields.children[0].children[1].click();
         }
 
@@ -63,26 +63,26 @@
     var labelsWork = function() {
         dowork(1, function() {
             var assignee = document.querySelector('.issue-field-list .issue-field div[title="feature"]');
-            return { item: assignee, invoke: projectsWork };
-        });
-    };
-
-    var projectsWork = function() {
-        dowork(2, function() {
-            var assignee = document.querySelector('.issue-field-list .issue-field div[data-value="70539"]');
             return { item: assignee, invoke: milestonesWork };
         });
     };
 
+    //var projectsWork = function() {
+    //    dowork(2, function() {
+    //        var assignee = document.querySelector('.issue-field-list .issue-field div[data-value="70539"]');
+    //        return { item: assignee, invoke: milestonesWork };
+    //    });
+    //};
+
     var milestonesWork = function() {
-        dowork(3, function() {
+        dowork(2, function() {
             var assignee = document.querySelector('.issue-field-list .milestone [data-program]');
             return { item: assignee, invoke: branchesWork };
         });
     };
 
     var branchesWork = function() {
-        dowork(4, function() {
+        dowork(3, function() {
             var assignee = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/main"]');
             if (assignee === null) {
                 assignee = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/master"]');
@@ -92,7 +92,7 @@
     };
 
     var planedWork = function() {
-        dowork(8, function() {
+        dowork(4, function() {
             var assignee = document.querySelector('.datetimepicker-days .today');
             return { item: assignee, invoke: null };
         });
