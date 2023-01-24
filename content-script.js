@@ -3,11 +3,11 @@
         console.log('Gitee Issue auto fill has been registered');
 
         // 判断是 PR 还是 Issue
-        var isPR = window.location.href.indexOf('/pulls/') > 0 || window.location.href.indexOf('/pull/') > 0;
+        const isPR = window.location.href.indexOf('/pulls/') > 0 || window.location.href.indexOf('/pull/') > 0;
 
         // doWork
         if (isPR) {
-            var field = document.querySelector('.pull-request__sidebar .auto-processing > :not(.checked) > label[for="pull_request_prune_branch"]');
+            const field = document.querySelector('.pull-request__sidebar .auto-processing > :not(.checked) > label[for="pull_request_prune_branch"]');
             if (field) {
                 field.click();
             }
@@ -17,16 +17,16 @@
         }
     };
 
-    var pullRequestLabel = function() {
-        var fields = document.querySelector('.pull-request__sidebar .label-field');
-        var field = fields.children[1];
+    const pullRequestLabel = function() {
+        const fields = document.querySelector('.pull-request__sidebar .label-field');
+        const field = fields.children[1];
         if (field.children.length === 0) {
             fields.children[0].children[1].click();
         } else {
             pullMilestone();
         }
-        var handler = window.setInterval(function() {
-            var label = fields.querySelector('[data-value="56189147"]');
+        const handler = window.setInterval(function() {
+            const label = fields.querySelector('[data-value="56189147"]');
             if (label) {
                 window.clearInterval(handler);
                 label.click();
@@ -36,54 +36,54 @@
         }, 300);
     };
 
-    var pullMilestone = function() {
-        var fields = document.querySelector('.pull-request__sidebar .milestone-field');
-        var field = fields.children[1];
+    const pullMilestone = function() {
+        const fields = document.querySelector('.pull-request__sidebar .milestone-field');
+        const field = fields.children[1];
         if (field.children.length == 0) {
             fields.children[0].children[1].click();
         }
 
-        var handler = window.setInterval(function() {
-            var label = fields.querySelectorAll('.scrolling > .item');
+        const handler = window.setInterval(function() {
+            const label = fields.querySelectorAll('.scrolling > .item');
             if (label.length > 1) {
                 window.clearTimeout(handler);
-                var index = label.length - 1;
+                const index = label.length - 1;
                 label[index].click();
             }
         }, 300);
     };
 
-    var assigneesWork = function() {
-        dowork(0, function() {
-            var assignee = document.getElementById('issue-user-554725').querySelector('.btn-set-assignee');
+    const assigneesWork = function() {
+        doWork(0, function() {
+            const assignee = document.getElementById('issue-user-554725').querySelector('.btn-set-assignee');
             return { item: assignee, invoke: labelsWork };
         });
     };
 
-    var labelsWork = function() {
+    const labelsWork = function() {
         doWork(1, function() {
-            var assignee = document.querySelector('.issue-field-list .issue-field div[title="feature"]');
+            const assignee = document.querySelector('.issue-field-list .issue-field div[title="feature"]');
             return { item: assignee, invoke: milestonesWork };
         });
     };
 
-    //var projectsWork = function() {
+    //const projectsWork = function() {
     //    dowork(2, function() {
-    //        var assignee = document.querySelector('.issue-field-list .issue-field div[data-value="70539"]');
+    //        const assignee = document.querySelector('.issue-field-list .issue-field div[data-value="70539"]');
     //        return { item: assignee, invoke: milestonesWork };
     //    });
     //};
 
-    var milestonesWork = function() {
+    const milestonesWork = function() {
         doWork(2, function() {
-            var assignee = document.querySelector('.issue-field-list .milestone [data-program]');
+            const assignee = document.querySelector('.issue-field-list .milestone [data-program]');
             return { item: assignee, invoke: branchesWork };
         });
     };
 
-    var branchesWork = function() {
+    const branchesWork = function() {
         doWork(3, function() {
-            var assignee = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/main"]');
+            let assignee = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/main"]');
             if (assignee === null) {
                 assignee = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/master"]');
             }
@@ -91,20 +91,20 @@
         });
     };
 
-    var planedWork = function() {
+    const planedWork = function() {
         doWork(4, function() {
-            var assignee = document.querySelector('.datetimepicker-days .today');
+            const assignee = document.querySelector('.datetimepicker-days .today');
             return { item: assignee, invoke: null };
         });
     }
 
-    var doWork = function(filter, callback) {
-        var fields = document.querySelectorAll('.issue-field-list .issue-field');
-        var right = fields[index].querySelector('.issue-field-action');
+    const doWork = function(filter, callback) {
+        const fields = document.querySelectorAll('.issue-field-list .issue-field');
+        const right = filter().querySelector('.issue-field-action');
         right.click();
 
-        var handler = window.setInterval(function() {
-            var data = callback();
+        const handler = window.setInterval(function() {
+            const data = callback();
             if (data.item) {
                 window.clearInterval(handler);
                 data.item.click();
