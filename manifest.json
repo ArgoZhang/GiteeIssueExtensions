@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "码云平台 Issue 自动填充默认值扩展插件",
-    "version": "1.0.0",
-    "description": "码云平台 Issue 自动填充默认值扩展插件",
+    "name": "码云平台 Issue/PR 自动填充默认值扩展插件",
+    "version": "2.0.0",
+    "description": "码云平台 Issue/Pull Request 自动填充默认值扩展插件",
     "author": "argo zhang",
     "icons": {
         "48": "icon.png",
