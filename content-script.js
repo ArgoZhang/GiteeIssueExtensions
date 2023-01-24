@@ -13,42 +13,52 @@
             }
 
             const pullRequestLabel = function () {
-                const field = document.querySelector('.pull-request__sidebar .label-field .label-dropdown');
-                if (field) {
-                    field.click();
-                } else {
-                    pullMilestone();
-                }
-                const handler = window.setInterval(function () {
-                    const labels = [...field.querySelectorAll('.item[data-value]')];
-                    const label = labels.find(v => {
-                       const labelName = v.querySelector('.label').innerText.trim();
-                       return labelName == 'document';
-                    });
-                    if (label) {
-                        window.clearInterval(handler);
-                        label.click();
-
+                // check current labels
+                const current_labels = document.querySelector('.pull-request__sidebar .label-field .content').innerText;
+                if(current_labels == '未设置') {
+                    const field = document.querySelector('.pull-request__sidebar .label-field .label-dropdown');
+                    if (field) {
+                        field.click();
+                    } else {
                         pullMilestone();
                     }
-                }, 300);
+                    const handler = window.setInterval(function () {
+                        const labels = [...field.querySelectorAll('.item[data-value]')];
+                        const label = labels.find(v => {
+                            const labelName = v.querySelector('.label').innerText.trim();
+                            return labelName == 'document';
+                        });
+                        if (label) {
+                            window.clearInterval(handler);
+                            label.click();
+
+                            pullMilestone();
+                        }
+                    }, 300);
+                }
+                else {
+                    pullMilestone();
+                }
             };
 
             const pullMilestone = function () {
                 const fields = document.querySelector('.pull-request__sidebar .milestone-field');
-                const field = fields.children[1];
-                if (field.children.length == 0) {
-                    fields.children[0].children[1].click();
-                }
-
-                const handler = window.setInterval(function () {
-                    const label = fields.querySelectorAll('.scrolling > .item');
-                    if (label.length > 1) {
-                        window.clearTimeout(handler);
-                        const index = label.length - 1;
-                        label[index].click();
+                const current_milestone = fields.querySelector('.content').innerText.trim();
+                if(current_milestone == '未关联') {
+                    const field = fields.children[1];
+                    if (field.children.length == 0) {
+                        fields.children[0].children[1].click();
                     }
-                }, 300);
+
+                    const handler = window.setInterval(function () {
+                        const label = fields.querySelectorAll('.scrolling > .item');
+                        if (label.length > 1) {
+                            window.clearTimeout(handler);
+                            const index = label.length - 1;
+                            label[index].click();
+                        }
+                    }, 300);
+                }
             };
             
             pullRequestLabel();
