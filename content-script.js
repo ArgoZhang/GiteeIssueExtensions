@@ -5,7 +5,7 @@
         // 判断是 PR 还是 Issue
         var isPR = window.location.href.indexOf('/pulls/') > 0 || window.location.href.indexOf('/pull/') > 0;
 
-        // dowork
+        // doWork
         if (isPR) {
             var field = document.querySelector('.pull-request__sidebar .auto-processing > :not(.checked) > label[for="pull_request_prune_branch"]');
             if (field) {
@@ -61,7 +61,7 @@
     };
 
     var labelsWork = function() {
-        dowork(1, function() {
+        doWork(1, function() {
             var assignee = document.querySelector('.issue-field-list .issue-field div[title="feature"]');
             return { item: assignee, invoke: milestonesWork };
         });
@@ -75,14 +75,14 @@
     //};
 
     var milestonesWork = function() {
-        dowork(2, function() {
+        doWork(2, function() {
             var assignee = document.querySelector('.issue-field-list .milestone [data-program]');
             return { item: assignee, invoke: branchesWork };
         });
     };
 
     var branchesWork = function() {
-        dowork(3, function() {
+        doWork(3, function() {
             var assignee = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/main"]');
             if (assignee === null) {
                 assignee = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/master"]');
@@ -92,13 +92,13 @@
     };
 
     var planedWork = function() {
-        dowork(4, function() {
+        doWork(4, function() {
             var assignee = document.querySelector('.datetimepicker-days .today');
             return { item: assignee, invoke: null };
         });
     }
 
-    var dowork = function(index, callback) {
+    var doWork = function(filter, callback) {
         var fields = document.querySelectorAll('.issue-field-list .issue-field');
         var right = fields[index].querySelector('.issue-field-action');
         right.click();
