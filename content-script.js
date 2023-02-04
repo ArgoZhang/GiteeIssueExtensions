@@ -91,7 +91,7 @@
             
             const assigneesWork = function () {
                 doWork(issue_worker, () => {
-                    const assignee = document.getElementById('issue-user-554725').querySelector('.btn-set-assignee');
+                    const assignee = document.querySelector('.issue-field .issue-collaborators .item[data-text="Argo"] .btn-set-assignee');
                     return {item: assignee, invoke: labelsWork};
                 });
             };
