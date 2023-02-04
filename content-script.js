@@ -75,21 +75,10 @@
             const issue_branch = document.querySelector('.issue-field-list .issue-field.branch');
             const issue_date = document.querySelector('.issue-field-list .issue-field.date');
             
-            const doWork = function (field, issue_item, defaultValue, callback) {
-                let content = '';
-                if (issue_item === issue_date) {
-                    const nv = [...issue_item.querySelectorAll('.left input')].map(v => v.value === '').length > 0;
-                    if (nv) {
-                        content = '未设置'
-                    }
-                }
-                else {
-                    content = issue_item.querySelector('.left .default').innerText.replace('\n', '').trim();
-                }
-                if (isNew || defaultValue.indexOf(content) > -1) {
-                    const right = field.querySelector('.issue-field-action');
-                    right.click();
-                }
+            const doWork = function (field, callback) {
+                const right = field.querySelector('.issue-field-action');
+                right.click();
+
                 const handler = window.setInterval(function () {
                     const data = callback();
                     if (data.item) {
@@ -103,38 +92,58 @@
             }
             
             const assigneesWork = function () {
-                doWork(issue_worker, issue_worker, ['未设置', 'Not set'], () => {                    
-                    const assignee = document.querySelector('.issue-field .issue-collaborators .item[data-text="Argo"] .btn-set-assignee');
-                    return {item: assignee, invoke: labelsWork};
-                });
+                if (!isNew && issue_worker.querySelector('.left .selected-users').children.length > 0) {
+                    labelsWork();
+                }
+                else {
+                    doWork(issue_worker, () => {                    
+                        const assignee = document.querySelector('.issue-field .issue-collaborators .item[data-text="Argo"] .btn-set-assignee');
+                        return {item: assignee, invoke: labelsWork};
+                    });
+                }
             };
 
             const labelsWork = function () {
-                doWork(issue_labels, issue_labels, ['未设置', 'Not set'], () => {
-                    const assignee = document.querySelector('.issue-field-list .issue-field div[title="feature"]');
-                    return {item: assignee, invoke: milestonesWork};
-                });
+                if (!isNew && issue_labels.querySelectorAll('.left .labels .issue-label-item').length > 0) {
+                    milestonesWork();
+                }
+                else {
+                    doWork(issue_labels, () => {
+                        const assignee = document.querySelector('.issue-field-list .issue-field div[title="feature"]');
+                        return {item: assignee, invoke: milestonesWork};
+                    });
+                }
             };
 
             const milestonesWork = function () {
-                doWork(issue_milestone, issue_milestone, ['未关联', 'No related milestones'], function () {
-                    const assignee = document.querySelector('.issue-field-list .milestone [data-program]');
-                    return {item: assignee, invoke: branchesWork};
-                });
+                if (!isNew && issue_milestone.querySelector('.left > .dropdown > .text').children.length === 0) {
+                    branchesWork();
+                }
+                else {
+                    doWork(issue_milestone, function () {
+                        const assignee = document.querySelector('.issue-field-list .milestone [data-program]');
+                        return {item: assignee, invoke: branchesWork};
+                    });
+                }
             };
 
             const branchesWork = function () {
-                doWork(issue_branch, issue_branch, ['未关联', 'No related branch'], function () {
-                    let assignee = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/main"]');
-                    if (assignee === null) {
-                        assignee = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/master"]');
-                    }
-                    return {item: assignee, invoke: planedWork};
-                });
+                if (!isNew && issue_branch.querySelector('.left > .dropdown > .text').children.length === 0) {
+                    planedWork();
+                }
+                else {
+                    doWork(issue_branch, function () {
+                        let assignee = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/main"]');
+                        if (assignee === null) {
+                            assignee = document.querySelector('.issue-field-list .issue-field div[data-value="refs/heads/master"]');
+                        }
+                        return {item: assignee, invoke: planedWork};
+                    });
+                }
             };
 
             const planedWork = function () {
-                doWork(issue_date, issue_date, ['未设置'], function () {
+                doWork(issue_date, function () {
                     const assignee = document.querySelector('.datetimepicker-days .today');
                     return {item: assignee, invoke: null};
                 });
