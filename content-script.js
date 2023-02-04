@@ -14,27 +14,29 @@
 
             const pullRequestLabel = function () {
                 // check current labels
-                const current_labels = document.querySelector('.pull-request__sidebar .label-field .content').innerText;
-                if(current_labels === '未设置') {
+                if(document.querySelector('.pull-request__sidebar .label-field .content').children.length === 0) {
                     const field = document.querySelector('.pull-request__sidebar .label-field .label-dropdown');
                     if (field) {
                         field.click();
-                    } else {
-                        pullMilestone();
-                    }
-                    const handler = window.setInterval(function () {
-                        const labels = [...field.querySelectorAll('.item[data-value]')];
-                        const label = labels.find(v => {
-                            const labelName = v.querySelector('.label').innerText.trim();
-                            return labelName === 'document';
-                        });
-                        if (label) {
-                            window.clearInterval(handler);
-                            label.click();
 
-                            pullMilestone();
-                        }
-                    }, 300);
+                        const handler = window.setInterval(function () {
+                            const labels = [...field.querySelectorAll('.item[data-value]')];
+                            const label = labels.find(v => {
+                                const labelName = v.querySelector('.label').innerText.trim();
+                                return labelName === 'document' || labelName === 'feature';
+                            });
+                            if (label) {
+                                window.clearInterval(handler);
+                                label.click();
+                                
+                                const clickEvent = document.createEvent('Events');
+                                clickEvent.initEvent('click', true, true); 
+                                field.previousElementSibling.dispatchEvent(clickEvent);
+
+                                pullMilestone();
+                            }
+                        }, 300);
+                    }
                 }
                 else {
                     pullMilestone();
@@ -43,8 +45,7 @@
 
             const pullMilestone = function () {
                 const fields = document.querySelector('.pull-request__sidebar .milestone-field');
-                const current_milestone = fields.querySelector('.content').innerText.trim();
-                if(current_milestone === '未关联') {
+                if(fields.querySelector('.content [data-value="0"]')) {
                     const field = fields.children[1];
                     if (field.children.length === 0) {
                         fields.children[0].children[1].click();
