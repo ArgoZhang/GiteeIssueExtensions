@@ -11,6 +11,7 @@
     "content_scripts": [{
         "matches": [
             "https://gitee.com/Longbow/GiteeIssueExtensions/issues/*",
+            "https://gitee.com/Longbow/GiteeIssueExtensions/pulls/*",
             "https://gitee.com/LongbowEnterprise/BootstrapBlazor/issues/*",
             "https://gitee.com/LongbowEnterprise/BootstrapBlazor/pulls/*",
             "https://gitee.com/LongbowEnterprise/BootstrapBlazor/pull/new/*",
