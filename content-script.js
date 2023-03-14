@@ -129,7 +129,7 @@
             };
 
             const branchesWork = function () {
-                if (!isNew && issue_branch.querySelector('.left > .dropdown > .text').children.length === 0) {
+                if (!isNew && issue_branch.querySelector('.left > .dropdown > .default') === null) {
                     planedWork();
                 }
                 else {
