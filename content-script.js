@@ -144,10 +144,13 @@
             };
 
             const planedWork = function () {
-                doWork(issue_date, function () {
-                    const assignee = document.querySelector('.datetimepicker-days .today');
-                    return {item: assignee, invoke: null};
-                });
+                var vals = issue_date.querySelectorAll('[readonly]')
+                if(vals.length === 2 && vals[0].value === '' && vals[1].value === '') {
+                    doWork(issue_date, function () {
+                        const assignee = document.querySelector('.datetimepicker-days .today');
+                        return {item: assignee, invoke: null};
+                    });
+                }
             }
 
             assigneesWork();
